@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+    <title>Contact</title>
+    <meta content="" name="description" />
+    <meta content="" name="keywords" />
+
+    <!-- Favicons -->
+    <link href="img/logo.png" rel="icon" th:href="@{/img/logo.png}"/>
+
+    <!-- Bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css"
+    />
+
+    <!-- Font Awesome -->
+    <script
+      src="https://kit.fontawesome.com/93578c133e.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- CSS File -->
+    <link href="css/main.css" rel="stylesheet" th:href="@{/css/main.css}"/>
+    <link href="css/style.css" rel="stylesheet" th:href="@{/css/style.css}"/>
+  </head>
+
+  <body>
+    <!-- ======= Header ======= -->
+    <header id="header" class="header fixed-top d-flex align-items-center">
+      <div class="d-flex align-items-center justify-content-between">
+        <i class="bi bi-list toggle-sidebar-btn"></i>
+        <a href="index.html" class="logo d-flex align-items-center" th:href="@{/dashboard}">
+          <img src="img/logo.png" style="padding-left: 15px" alt="" />
+          <span class="d-none d-lg-block">EMS</span>
+        </a>
+      </div>
+      <!-- End Logo -->
+
+      <nav class="header-nav ms-auto">
+        <ul class="d-flex align-items-center">
+          <li class="nav-item dropdown pe-3">
+            <a
+              class="nav-link nav-profile d-flex align-items-center pe-0"
+              href="#"
+              data-bs-toggle="dropdown"
+            >
+              <img
+                src="assets/img/profile-img.jpg"
+                alt="Profile"
+                class="rounded-circle"
+              />
+              <span class="d-none d-md-block dropdown-toggle ps-2"
+                >Wong Jun Ann</span
+              > </a
+            ><!-- End Profile Image Icon -->
+
+            <ul
+              class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile"
+            >
+              <li class="dropdown-header">
+                <h6>Wong Jun Ann</h6>
+                <span>Project Owner</span>
+              </li>
+              <li>
+                <hr class="dropdown-divider" />
+              </li>
+
+              <li>
+                <a
+                  class="dropdown-item d-flex align-items-center"
+                  href="users-profile.html"
+                >
+                  <i class="bi bi-person"></i>
+                  <span>My Profile</span>
+                </a>
+              </li>
+              <li>
+                <hr class="dropdown-divider" />
+              </li>
+
+              <li>
+                <a
+                  class="dropdown-item d-flex align-items-center"
+                  href="users-profile.html"
+                >
+                  <i class="bi bi-gear"></i>
+                  <span>Account Settings</span>
+                </a>
+              </li>
+              <li>
+                <hr class="dropdown-divider" />
+              </li>
+
+              <li>
+                <a
+                  class="dropdown-item d-flex align-items-center"
+                  href="pages-faq.html"
+                >
+                  <i class="bi bi-question-circle"></i>
+                  <span>Need Help?</span>
+                </a>
+              </li>
+              <li>
+                <hr class="dropdown-divider" />
+              </li>
+
+              <li>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <i class="bi bi-box-arrow-right"></i>
+                  <span>Sign Out</span>
+                </a>
+              </li>
+            </ul>
+            <!-- End Profile Dropdown Items -->
+          </li>
+          <!-- End Profile Nav -->
+        </ul>
+      </nav>
+      <!-- End Icons Navigation -->
+    </header>
+    <!-- End Header -->
+
+    <!-- ======= Sidebar ======= -->
+    <aside id="sidebar" class="sidebar">
+      <ul class="sidebar-nav" id="sidebar-nav">
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="index.html" th:href="@{/dashboard}">
+            <i class="bi bi-grid"></i>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <!-- End Dashboard Nav -->
+
+        <li class="nav-item">
+          <a
+            class="nav-link collapsed"
+            data-bs-target="#Campaigns"
+            data-bs-toggle="collapse"
+            href="#"
+          >
+            <i class="bi bi-envelope"></i><span>Campaigns</span
+            ><i class="bi bi-chevron-down ms-auto"></i>
+          </a>
+          <ul
+            id="Campaigns"
+            class="nav-content collapse"
+            data-bs-parent="#sidebar-nav"
+          >
+            <li>
+              <a href="newemail.html" th:href="@{/campaign}">
+                <i class="bi bi-circle"></i>
+                <span>Search Campaign</span>
+              </a>
+            </li>
+            <li>
+              <a href="sendbulkemail.html">
+                <i class="bi bi-circle"></i>
+                <span>Create New Campaign</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <!-- End Campaigns Nav -->
+
+        <li class="nav-item">
+          <a
+            class="nav-link collapsed"
+            data-bs-target="#EmailTemplates"
+            data-bs-toggle="collapse"
+            href="#"
+          >
+            <i class="bi bi-files-alt"></i><span>Email Templates</span
+            ><i class="bi bi-chevron-down ms-auto"></i>
+          </a>
+          <ul
+            id="EmailTemplates"
+            class="nav-content collapse"
+            data-bs-parent="#sidebar-nav"
+          >
+            <li>
+              <a href="emailTemplateList.html" th:href="@{/template}">
+                <i class="bi bi-circle"></i>
+                <span>Search Template</span>
+              </a>
+            </li>
+            <li>
+              <a href="emailTemplateCreate.html">
+                <i class="bi bi-circle"></i>
+                <span>Create New Template</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <!-- End Email Templates Nav -->
+
+        <li class="nav-item">
+          <a class="nav-link active" href="contact.html" th:href="@{/contact}">
+            <i class="fa-regular fa-address-book"></i>
+            <span>Contact</span>
+          </a>
+        </li>
+        <!-- End Contact Page Nav -->
+
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="auditlog.html">
+            <i class="fa fa-history"></i>
+            <span>Audit Log</span>
+          </a>
+        </li>
+        <!-- End Audit Log Nav -->
+
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="#">
+            <i class="bi bi-graph-up"></i>
+            <span>Insight</span>
+          </a>
+        </li>
+        <!-- End Insight Page Nav -->
+      </ul>
+    </aside>
+    <!-- End Sidebar-->
+
+    <!--Enter content Here-->
+
+    <main id="main" class="main">
+      <div class="pagetitle">
+        <h1>Contact</h1>
+        <nav>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item active">Contact</li>
+          </ol>
+        </nav>
+      </div>
+      <!-- End Page Title -->
+
+      <section class="section">
+        <div class="my-3 p-3 bg-body rounded shadow-sm">
+          <h6 class="border-bottom pb-2 mb-0 d-flex justify-content-between">
+            <span
+              style="
+                font-size: 18px;
+                font-weight: 500;
+                color: #012970;
+                font-family: 'Poppins', sans-serif;
+                margin-top: 10px;
+              "
+              ><i class="bi bi bi-list-check"></i> Group list...</span
+            >
+            <!-- Button trigger modal -->
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-bs-toggle="modal"
+              data-bs-target="#createGroup"
+            >
+              Create
+            </button>
+          </h6>
+
+          <!-- <div class="d-flex text-body-secondary pt-3">
+            <div class="pb-3 mb-0 border-bottom w-100">
+              <div class="row justify-content-between">
+                <span class="col-lg-9">
+                  <strong class="text-black">Customer Group Name 1</strong>
+                  <small class="d-block text-muted"> Description </small>
+                </span>
+
+                <span class="col-lg-3 hstack gap-2">
+                  <button
+                    type="button"
+                    class="btn btn-lg btn-outline-primary btn-square-md ms-auto"
+                  >
+                    <i class="fa-solid fa-pen-to-square"></i>
+                  </button>
+
+                  <button
+                    type="button"
+                    class="btn btn-lg btn-outline-danger btn-square-md"
+                  >
+                    <i class="fa-solid fa-trash"></i>
+                  </button>
+                  <div class="vr"></div>
+                  <button
+                    type="button"
+                    class="btn btn-lg btn-outline-primary btn-square-md"
+                  >
+                    <i class="fa-solid fa-eye"></i>
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-lg btn-outline-primary btn-square-md"
+                  >
+                    <i class="fa-solid fa-user-plus"></i>
+                  </button>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex text-body-secondary pt-3">
+            <div class="pb-3 mb-0 border-bottom w-100">
+              <div class="row justify-content-between">
+                <span class="col-lg-9">
+                  <strong class="text-black">Customer Group Name 2</strong>
+                  <small class="d-block text-muted">Description</small>
+                </span>
+
+                <span class="col-lg-3 hstack gap-2">
+                  <button
+                    type="button"
+                    class="btn btn-lg btn-outline-primary btn-square-md ms-auto"
+                  >
+                    <i class="fa-solid fa-pen-to-square"></i>
+                  </button>
+
+                  <button
+                    type="button"
+                    class="btn btn-lg btn-outline-danger btn-square-md"
+                  >
+                    <i class="fa-solid fa-trash"></i>
+                  </button>
+                  <div class="vr"></div>
+                  <button
+                    type="button"
+                    class="btn btn-lg btn-outline-primary btn-square-md"
+                  >
+                    <i class="fa-solid fa-eye"></i>
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-lg btn-outline-primary btn-square-md"
+                  >
+                    <i class="fa-solid fa-user-plus"></i>
+                  </button>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex text-body-secondary pt-3">
+            <div class="pb-3 mb-0 border-bottom w-100">
+              <div class="row justify-content-between">
+                <span class="col-lg-9">
+                  <strong class="text-black">Customer Group Name 3</strong>
+                  <small class="d-block text-muted">Description</small>
+                </span>
+
+                <span class="col-lg-3 hstack gap-2">
+                  <button
+                    type="button"
+                    class="btn btn-lg btn-outline-primary btn-square-md ms-auto"
+                  >
+                    <i class="fa-solid fa-pen-to-square"></i>
+                  </button>
+
+                  <button
+                    type="button"
+                    class="btn btn-lg btn-outline-danger btn-square-md"
+                  >
+                    <i class="fa-solid fa-trash"></i>
+                  </button>
+                  <div class="vr"></div>
+                  <button
+                    type="button"
+                    class="btn btn-lg btn-outline-primary btn-square-md"
+                  >
+                    <i class="fa-solid fa-eye"></i>
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-lg btn-outline-primary btn-square-md"
+                  >
+                    <i class="fa-solid fa-user-plus"></i>
+                  </button>
+                </span>
+              </div>
+            </div>
+          </div> -->
+          <!-- Customer Groups Container -->
+          <div id="customerGroupsContainer"></div>
+        </div>
+
+        <!-- Create Group Modal -->
+        <div
+          class="modal fade"
+          id="createGroup"
+          tabindex="-1"
+          aria-labelledby="createGroupLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="createGroupLabel">
+                  Create Customer Group
+                </h1>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <div class="row justify-content-between">
+                  <label for="name" class="col-sm-2 col-form-label pb-3"
+                    >Name:</label
+                  >
+                  <div class="col-sm-9 pb-3">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="name"
+                      placeholder="Group Name"
+                      required
+                    />
+                  </div>
+                  <label for="description" class="col-sm-2 col-form-label pb-3"
+                    >Description:</label
+                  >
+                  <div class="col-sm-9 pb-3">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="description"
+                      placeholder="Group Description"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  onclick="saveCustomerGroup()"
+                >
+                  Save
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Edit Group Modal -->
+        <div
+          class="modal fade"
+          id="editGroup"
+          tabindex="-1"
+          aria-labelledby="editGroupLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="editGroupLabel">
+                  Edit Customer Group
+                </h1>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <div class="row justify-content-between">
+                  <label for="name" class="col-sm-2 col-form-label pb-3"
+                    >Name:</label
+                  >
+                  <div class="col-sm-9 pb-3">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="name"
+                      required
+                    />
+                  </div>
+                  <label for="description" class="col-sm-2 col-form-label pb-3"
+                    >Description:</label
+                  >
+                  <div class="col-sm-9 pb-3">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="description"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  onclick="editCustomerGroup()"
+                >
+                  Save changes
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!--Content Close Here-->
+
+    <!-- ======= Footer ======= -->
+    <footer id="footer" class="footer">
+      <div class="copyright">
+        &copy; Copyright 2023&nbsp;<strong><span>Wong Jun Ann</span></strong
+        >. All Rights Reserved
+      </div>
+    </footer>
+    <!-- End Footer -->
+
+    <a
+      href="#"
+      class="back-to-top d-flex align-items-center justify-content-center"
+      ><i class="bi bi-arrow-up-short"></i
+    ></a>
+
+    <!-- Vendor JS Files -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Template Main JS File -->
+    <script src="js/main.js"></script>
+
+    <script>
+      function saveCustomerGroup() {
+        const nameInput = document.getElementById("name");
+        const descriptionInput = document.getElementById("description");
+
+        // Check if the name and description inputs are not empty
+        if (
+          nameInput.value.trim() === "" ||
+          descriptionInput.value.trim() === ""
+        ) {
+          alert("Please fill in all the fields.");
+          return;
+        }
+
+        const customerGroupData = {
+          name: nameInput.value,
+          description: descriptionInput.value,
+        };
+
+        fetch("http://localhost:8080/v1/customerGroup", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(customerGroupData),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            // Display success message
+            alert("Customer group created successfully!");
+
+            // Clear form inputs
+            nameInput.value = "";
+            descriptionInput.value = "";
+
+            // Close the modal
+            const modal = document.getElementById("createGroup");
+            const bootstrapModal = bootstrap.Modal.getInstance(modal);
+            bootstrapModal.hide();
+
+            // Reload the page to display the updated list of customer groups
+            location.reload();
+          })
+          .catch((error) => {
+            console.error("Error creating customer group:", error);
+            alert("Error creating customer group. Please try again later.");
+          });
+      }
+    </script>
+
+    <script>
+      // Function to fetch customer group data from the API
+      function fetchCustomerGroups() {
+        fetch("http://localhost:8080/v1/customerGroup")
+          .then((response) => response.json())
+          .then((data) => {
+            // Call the function to create HTML elements for each customer group
+            createCustomerGroupElements(data);
+          })
+          .catch((error) => {
+            console.error("Error fetching customer groups:", error);
+            alert("Error fetching customer groups. Please try again later.");
+          });
+      }
+
+      // Function to create HTML elements for each customer group
+      function createCustomerGroupElements(groups) {
+        const container = document.getElementById("customerGroupsContainer");
+
+        // Clear existing content from the container
+        container.innerHTML = "";
+
+        // Loop through each customer group and create the HTML elements
+        groups.forEach((group) => {
+          const groupElement = document.createElement("div");
+          groupElement.classList.add("d-flex", "text-body-secondary", "pt-3");
+          groupElement.dataset.groupId = group.id; // Set the data-group-id attribute to store the group ID
+          groupElement.innerHTML = `
+        <div class="pb-3 mb-0 border-bottom w-100">
+          <div class="row justify-content-between">
+            <span class="col-lg-9">
+              <strong class="text-black">${group.name}</strong>
+              <small class="d-block text-muted">${group.description}</small>
+            </span>
+
+            <span class="col-lg-3 hstack gap-2">
+              <button
+                type="button"
+                class="btn btn-primary ms-auto"
+                onclick="openEditModal(event)"
+              >
+                Edit
+              </button>
+              <button
+                type="button"
+                class="btn btn-info text-white"
+              >
+                View
+              </button>
+              <button
+                type="button"
+                class="btn btn-danger"
+              >
+                Delete
+              </button>
+            </span>
+          </div>
+        </div>
+      `;
+          container.appendChild(groupElement);
+        });
+      }
+
+      function openEditModal(event) {
+        const editModal = document.getElementById("editGroup");
+        const groupElement = event.target.closest("[data-group-id]");
+
+        // Get the current customer group data from the clicked element
+        const groupId = groupElement.dataset.groupId;
+        const groupName = groupElement.querySelector("strong").innerText;
+        const groupDescription = groupElement.querySelector("small").innerText;
+
+        const nameInput = editModal.querySelector("#name");
+        const descriptionInput = editModal.querySelector("#description");
+
+        // Populate the input fields with the current group data
+        nameInput.value = groupName;
+        descriptionInput.value = groupDescription;
+
+        // Show the modal
+        const bootstrapModal = new bootstrap.Modal(editModal);
+        bootstrapModal.show();
+
+        // Store the groupId in the modal for use in the update function
+        editModal.dataset.groupId = groupId;
+      }
+
+      function editCustomerGroup() {
+        const editModal = document.getElementById("editGroup");
+        const nameInput = editModal.querySelector("#name");
+        const descriptionInput = editModal.querySelector("#description");
+
+        // Get the current customer group data from the input fields
+        const updatedName = nameInput.value.trim();
+        const updatedDescription = descriptionInput.value.trim();
+
+        // Check if the name and description inputs are not empty
+        if (updatedName === "" || updatedDescription === "") {
+          alert("Please fill in all the fields.");
+          return;
+        }
+
+        // Get the ID of the customer group to be edited from the modal's dataset
+        const groupId = editModal.dataset.groupId;
+
+        const updatedGroupData = {
+          name: updatedName,
+          description: updatedDescription,
+        };
+
+        // Send a request to update the customer group data using the API endpoint
+        fetch(`http://localhost:8080/v1/customerGroup/${groupId}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedGroupData),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            // Display success message
+            alert("Customer group updated successfully!");
+
+            // Close the modal
+            const bootstrapModal = bootstrap.Modal.getInstance(editModal);
+            bootstrapModal.hide();
+
+            // Reload the page to display the updated list of customer groups
+            fetchCustomerGroups();
+          })
+          .catch((error) => {
+            console.error("Error updating customer group:", error);
+            alert("Error updating customer group. Please try again later.");
+          });
+      }
+
+      // Call the fetchCustomerGroups function when the page is loaded
+      document.addEventListener("DOMContentLoaded", function () {
+        fetchCustomerGroups();
+      });
+    </script>
+  </body>
+</html>

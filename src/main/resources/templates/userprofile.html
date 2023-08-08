@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+    <title>Index</title>
+    <meta content="" name="description" />
+    <meta content="" name="keywords" />
+
+    <!-- Favicons -->
+    <link href="img/logo.png" rel="icon" />
+
+    <!-- Bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css"
+    />
+
+    <!-- Font Awesome -->
+    <script
+      src="https://kit.fontawesome.com/93578c133e.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- CSS File -->
+    <link href="css/main.css" rel="stylesheet" />
+  </head>
+
+  <body>
+    <!-- ======= Header ======= -->
+    <header id="header" class="header fixed-top d-flex align-items-center">
+      <div class="d-flex align-items-center justify-content-between">
+        <i class="bi bi-list toggle-sidebar-btn"></i>
+        <a href="index.html" class="logo d-flex align-items-center">
+          <img src="img/logo.png" style="padding-left: 15px" alt="" />
+          <span class="d-none d-lg-block">EMS</span>
+        </a>
+      </div>
+      <!-- End Logo -->
+
+      <nav class="header-nav ms-auto">
+        <ul class="d-flex align-items-center">
+          <li class="nav-item dropdown pe-3">
+            <a
+              class="nav-link nav-profile d-flex align-items-center pe-0"
+              href="#"
+              data-bs-toggle="dropdown"
+            >
+              <img
+                src="assets/img/profile-img.jpg"
+                alt="Profile"
+                class="rounded-circle"
+              />
+              <span class="d-none d-md-block dropdown-toggle ps-2"
+                >Wong Jun Ann</span
+              > </a
+            ><!-- End Profile Image Icon -->
+
+            <ul
+              class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile"
+            >
+              <li class="dropdown-header">
+                <h6>Wong Jun Ann</h6>
+                <span>Project Owner</span>
+              </li>
+              <li>
+                <hr class="dropdown-divider" />
+              </li>
+
+              <li>
+                <a
+                  class="dropdown-item d-flex align-items-center"
+                  href="userprofile.html"
+                >
+                  <i class="bi bi-person"></i>
+                  <span>My Profile</span>
+                </a>
+              </li>
+              <li>
+                <hr class="dropdown-divider" />
+              </li>
+
+              <li>
+                <a
+                  class="dropdown-item d-flex align-items-center"
+                  href="userprofile.html"
+                >
+                  <i class="bi bi-gear"></i>
+                  <span>Account Settings</span>
+                </a>
+              </li>
+              <li>
+                <hr class="dropdown-divider" />
+              </li>
+
+              <li>
+                <a
+                  class="dropdown-item d-flex align-items-center"
+                  href="pages-faq.html"
+                >
+                  <i class="bi bi-question-circle"></i>
+                  <span>Need Help?</span>
+                </a>
+              </li>
+              <li>
+                <hr class="dropdown-divider" />
+              </li>
+
+              <li>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <i class="bi bi-box-arrow-right"></i>
+                  <span>Sign Out</span>
+                </a>
+              </li>
+            </ul>
+            <!-- End Profile Dropdown Items -->
+          </li>
+          <!-- End Profile Nav -->
+        </ul>
+      </nav>
+      <!-- End Icons Navigation -->
+    </header>
+    <!-- End Header -->
+
+    <!-- ======= Sidebar ======= -->
+    <aside id="sidebar" class="sidebar">
+      <ul class="sidebar-nav" id="sidebar-nav">
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="index.html">
+            <i class="bi bi-grid"></i>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <!-- End Dashboard Nav -->
+
+        <li class="nav-item">
+          <a
+            class="nav-link collapsed"
+            data-bs-target="#Campaigns"
+            data-bs-toggle="collapse"
+            href="#"
+          >
+            <i class="bi bi-envelope"></i><span>Campaigns</span
+            ><i class="bi bi-chevron-down ms-auto"></i>
+          </a>
+          <ul
+            id="Campaigns"
+            class="nav-content collapse"
+            data-bs-parent="#sidebar-nav"
+          >
+            <li>
+              <a href="newemail.html">
+                <i class="bi bi-circle"></i>
+                <span>Search Campaign</span>
+              </a>
+            </li>
+            <li>
+              <a href="sendbulkemail.html">
+                <i class="bi bi-circle"></i>
+                <span>Create New Campaign</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <!-- End Campaigns Nav -->
+
+        <li class="nav-item">
+          <a
+            class="nav-link collapsed"
+            data-bs-target="#EmailTemplates"
+            data-bs-toggle="collapse"
+            href="#"
+          >
+            <i class="bi bi-files-alt"></i><span>Email Templates</span
+            ><i class="bi bi-chevron-down ms-auto"></i>
+          </a>
+          <ul
+            id="EmailTemplates"
+            class="nav-content collapse"
+            data-bs-parent="#sidebar-nav"
+          >
+            <li>
+              <a href="emailTemplateList.html">
+                <i class="bi bi-circle"></i>
+                <span>Search Template</span>
+              </a>
+            </li>
+            <li>
+              <a href="emailTemplateCreate.html">
+                <i class="bi bi-circle"></i>
+                <span>Create New Template</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <!-- End Email Templates Nav -->
+
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="contact.html">
+            <i class="fa-regular fa-address-book"></i>
+            <span>Contact</span>
+          </a>
+        </li>
+        <!-- End Contact Page Nav -->
+
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="auditlog.html">
+            <i class="fa fa-history"></i>
+            <span>Audit Log</span>
+          </a>
+        </li>
+        <!-- End Audit Log Nav -->
+
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="#">
+            <i class="bi bi-graph-up"></i>
+            <span>Insight</span>
+          </a>
+        </li>
+        <!-- End Insight Page Nav -->
+      </ul>
+    </aside>
+    <!-- End Sidebar-->
+
+    <!--Enter content Here-->
+
+    <main id="main" class="main">
+      <div class="pagetitle">
+        <h1>Profile</h1>
+      </div>
+      <!-- End Page Title -->
+
+      <section class="section profile">
+        <div class="row">
+          <div class="col-xl-4">
+            <div class="card">
+              <div
+                class="card-body profile-card pt-4 d-flex flex-column align-items-center"
+              >
+                <img
+                  src="assets/img/profile-img.jpg"
+                  alt="Profile"
+                  class="rounded-circle"
+                />
+                <h2>Wong Jun Ann</h2>
+                <h3>Project Owner</h3>
+                <div class="social-links mt-2">
+                  <a href="https://www.facebook.com/" class="facebook"
+                    ><i class="bi bi-facebook"></i
+                  ></a>
+                  <a href="https://www.instagram.com/" class="instagram"
+                    ><i class="bi bi-instagram"></i
+                  ></a>
+                  <a href="https://www.linkedin.com/" class="linkedin"
+                    ><i class="bi bi-linkedin"></i
+                  ></a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-8">
+            <div class="card">
+              <div class="card-body pt-3">
+                <!-- Bordered Tabs -->
+                <ul class="nav nav-tabs nav-tabs-bordered">
+                  <li class="nav-item">
+                    <button
+                      class="nav-link active"
+                      data-bs-toggle="tab"
+                      data-bs-target="#profile-overview"
+                    >
+                      Overview
+                    </button>
+                  </li>
+
+                  <li class="nav-item">
+                    <button
+                      class="nav-link"
+                      data-bs-toggle="tab"
+                      data-bs-target="#profile-edit"
+                    >
+                      Edit Profile
+                    </button>
+                  </li>
+
+                  <!-- <li class="nav-item">
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Change Password</button>
+                  </li> -->
+                </ul>
+                <div class="tab-content pt-2">
+                  <div
+                    class="tab-pane fade show active profile-overview"
+                    id="profile-overview"
+                  >
+                    <h5 class="card-title">Profile Details</h5>
+
+                    <div class="row">
+                      <div class="col-lg-3 col-md-4 label">Full Name</div>
+                      <div id="displayfullName" class="col-lg-9 col-md-8" th:text="${userObj.name}">
+                        Wong Jun Ann
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-lg-3 col-md-4 label">Company</div>
+                      <div id="displayCompany" class="col-lg-9 col-md-8" th:text="${userObj.company}">
+                        New Era University Colloge
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-lg-3 col-md-4 label">Job</div>
+                      <div id="displayJob" class="col-lg-9 col-md-8" th:text="${userObj.job}">
+                        Project Owner
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-lg-3 col-md-4 label">Country</div>
+                      <div id="displayCountry" class="col-lg-9 col-md-8" th:text="${userObj.country}">
+                        Malaysia
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-lg-3 col-md-4 label">Address</div>
+                      <div id="displayAddress" class="col-lg-9 col-md-8" th:text="${userObj.address}">
+                        Kajang, Selangor
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-lg-3 col-md-4 label">Phone</div>
+                      <div id="displayPhone" class="col-lg-9 col-md-8" th:text="${userObj.phone}">
+                        010-2206227
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-lg-3 col-md-4 label">Email</div>
+                      <div id="displayEmail" class="col-lg-9 col-md-8" th:text="${userObj.email}">
+                        wongjunann0227@e.newera.edu.my
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    class="tab-pane fade profile-edit pt-3"
+                    id="profile-edit"
+                  >
+                    <!-- Profile Edit Form -->
+                    <form method="post" th:action="@{/profile}" th:object="${profileObj}">
+                      <div class="row mb-3">
+                        <label
+                          for="profileImage"
+                          class="col-md-4 col-lg-3 col-form-label"
+                          >Profile Image</label
+                        >
+                        <div class="col-md-8 col-lg-9">
+                          <img src="assets/img/profile-img.jpg" alt="Profile" />
+                          <div class="pt-2">
+                            <a
+                              href="#"
+                              class="btn btn-primary btn-sm"
+                              title="Upload new profile image"
+                              ><i class="bi bi-upload"></i
+                            ></a>
+                            <a
+                              href="#"
+                              class="btn btn-danger btn-sm"
+                              title="Remove my profile image"
+                              ><i class="bi bi-trash"></i
+                            ></a>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row mb-3">
+                        <label
+                          for="fullName"
+                          class="col-md-4 col-lg-3 col-form-label"
+                          >Full Name</label
+                        >
+                        <div class="col-md-8 col-lg-9">
+                          <input
+                            name="fullName"
+                            type="text"
+                            class="form-control"
+                            id="fullName"
+                            value=""
+                            th:field="*{name}"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="row mb-3">
+                        <label
+                          for="company"
+                          class="col-md-4 col-lg-3 col-form-label"
+                          >Company</label
+                        >
+                        <div class="col-md-8 col-lg-9">
+                          <input
+                            name="company"
+                            type="text"
+                            class="form-control"
+                            id="Company"
+                            value=""
+                            th:field="*{company}"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="row mb-3">
+                        <label
+                          for="Job"
+                          class="col-md-4 col-lg-3 col-form-label"
+                          >Job</label
+                        >
+                        <div class="col-md-8 col-lg-9">
+                          <input
+                            name="job"
+                            type="text"
+                            class="form-control"
+                            id="Job"
+                            value=""
+                            th:field="*{job}"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="row mb-3">
+                        <label
+                          for="Country"
+                          class="col-md-4 col-lg-3 col-form-label"
+                          >Country</label
+                        >
+                        <div class="col-md-8 col-lg-9">
+                          <input
+                            name="country"
+                            type="text"
+                            class="form-control"
+                            id="Country"
+                            value=""
+                            th:field="*{country}"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="row mb-3">
+                        <label
+                          for="Address"
+                          class="col-md-4 col-lg-3 col-form-label"
+                          >Address</label
+                        >
+                        <div class="col-md-8 col-lg-9">
+                          <input
+                            name="address"
+                            type="text"
+                            class="form-control"
+                            id="Address"
+                            value=""
+                            th:field="*{address}"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="row mb-3">
+                        <label
+                          for="Phone"
+                          class="col-md-4 col-lg-3 col-form-label"
+                          >Phone</label
+                        >
+                        <div class="col-md-8 col-lg-9">
+                          <input
+                            name="phone"
+                            type="text"
+                            class="form-control"
+                            id="Phone"
+                            value=""
+                            th:field="*{phone}"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="row mb-3">
+                        <label
+                          for="Email"
+                          class="col-md-4 col-lg-3 col-form-label"
+                          >Email</label
+                        >
+                        <div class="col-md-8 col-lg-9">
+                          <input
+                            name="email"
+                            type="email"
+                            class="form-control"
+                            id="Email"
+                            value=""
+                            th:field="*{email}"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="row mb-3">
+                        <label
+                          for="Facebook"
+                          class="col-md-4 col-lg-3 col-form-label"
+                          >Facebook Profile</label
+                        >
+                        <div class="col-md-8 col-lg-9">
+                          <input
+                            name="facebook"
+                            type="text"
+                            class="form-control"
+                            id="Facebook"
+                            value=""
+                            th:field="*{facebookLink}"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="row mb-3">
+                        <label
+                          for="Instagram"
+                          class="col-md-4 col-lg-3 col-form-label"
+                          >Instagram Profile</label
+                        >
+                        <div class="col-md-8 col-lg-9">
+                          <input
+                            name="instagram"
+                            type="text"
+                            class="form-control"
+                            id="Instagram"
+                            value=""
+                            th:field="*{instagramLink}"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="row mb-3">
+                        <label
+                          for="Linkedin"
+                          class="col-md-4 col-lg-3 col-form-label"
+                          >Linkedin Profile</label
+                        >
+                        <div class="col-md-8 col-lg-9">
+                          <input
+                            name="linkedin"
+                            type="text"
+                            class="form-control"
+                            id="Linkedin"
+                            value=""
+                            th:field="*{linkedinLink}"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="text-center">
+                        <button type="submit" class="btn btn-primary">
+                          Save Changes
+                        </button>
+                      </div>
+                    </form>
+                    <!-- End Profile Edit Form -->
+                  </div>
+
+                  <!-- <div class="tab-pane fade pt-3" id="profile-change-password">
+                    <!-- Change Password Form -->
+                  <!-- <form>
+  
+                      <div class="row mb-3">
+                        <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
+                        <div class="col-md-8 col-lg-9">
+                          <input name="password" type="password" class="form-control" id="currentPassword">
+                        </div>
+                      </div>
+  
+                      <div class="row mb-3">
+                        <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
+                        <div class="col-md-8 col-lg-9">
+                          <input name="newpassword" type="password" class="form-control" id="newPassword">
+                        </div>
+                      </div>
+  
+                      <div class="row mb-3">
+                        <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
+                        <div class="col-md-8 col-lg-9">
+                          <input name="renewpassword" type="password" class="form-control" id="renewPassword">
+                        </div>
+                      </div>
+  
+                      <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Change Password</button>
+                      </div>
+                    </form><!-- End Change Password Form -->
+
+                  <!-- </div> -->
+                </div>
+                <!-- End Bordered Tabs -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!--Content Close Here-->
+
+    <!-- ======= Footer ======= -->
+    <footer id="footer" class="footer">
+      <div class="copyright">
+        &copy; Copyright 2023&nbsp;<strong><span>Wong Jun Ann</span></strong
+        >. All Rights Reserved
+      </div>
+    </footer>
+    <!-- End Footer -->
+
+    <a
+      href="#"
+      class="back-to-top d-flex align-items-center justify-content-center"
+      ><i class="bi bi-arrow-up-short"></i
+    ></a>
+
+    <!-- Vendor JS Files -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Template Main JS File -->
+    <script src="js/main.js"></script>
+  </body>
+</html>
