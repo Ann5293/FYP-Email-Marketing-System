@@ -9,6 +9,8 @@ import java.util.List;
 @Repository
 public interface CustomerGroupRepository extends JpaRepository<CustomerGroupModel, Long> {
 
-    List<CustomerGroupModel> findAllByStatusNot(String status);
+    List<CustomerGroupModel> findAllByStatus(String status);
+    CustomerGroupModel findByIdAndStatusNot(Long id,String status);
+    Long countByStatus(String propertyValue);
 
 }

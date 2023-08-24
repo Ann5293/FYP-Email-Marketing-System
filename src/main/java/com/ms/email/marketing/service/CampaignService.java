@@ -4,13 +4,16 @@ import com.ms.email.marketing.constant.AppConstant;
 import com.ms.email.marketing.model.CampaignModel;
 import com.ms.email.marketing.model.CustomerGroupModel;
 import com.ms.email.marketing.model.EmailTemplateModel;
+import com.ms.email.marketing.model.response.CampaignCustomGetLatestCampaignModel;
 import com.ms.email.marketing.model.response.CampaignResponse;
+import com.ms.email.marketing.model.response.CampaignResultResponse;
 import com.ms.email.marketing.repository.CampaignRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +33,11 @@ public class CampaignService {
         List<CampaignModel> campaignModelList = campaignRepository.findAllByStatusNot(AppConstant.STATUS_DELETED);
         List<CampaignResponse> campaignResponseList = mapDTO(campaignModelList);
         return campaignResponseList;
+    }
+
+    private List<CampaignCustomGetLatestCampaignModel> getAllActiveCampaignWithCustomResponse() {
+        List<CampaignCustomGetLatestCampaignModel> campaignModelList = campaignRepository.getAllActiveCampaigns();
+        return campaignModelList;
     }
 
     private List<CampaignResponse> mapDTO(List<CampaignModel> campaignModelList) {
@@ -55,5 +63,16 @@ public class CampaignService {
         }
 
         return campaignResponseList;
+    }
+
+    public String handleCampaignPage(
+            Model model
+    ){
+        model.addAttribute("campaignList", getAllActiveCampaignWithCustomResponse());
+        return "campaignIndex";
+    }
+
+    public List<CampaignResultResponse> getCampaignResultResponse(Long id){
+        return campaignRepository.getCampaignResult(id);
     }
 }

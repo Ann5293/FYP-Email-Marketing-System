@@ -10,6 +10,8 @@ import java.util.List;
 public interface EmailTemplateRepository extends JpaRepository<EmailTemplateModel, Long> {
     List<EmailTemplateModel> findAllByStatusNot(String status);
 
-    long countByStatus(String propertyValue);
+    Long countByStatus(String propertyValue);
+
+    EmailTemplateModel findByIdAndStatusNot(Long id, String status);
 
 }

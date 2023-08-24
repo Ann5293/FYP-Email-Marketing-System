@@ -10,9 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class TemplateService {
@@ -58,6 +56,7 @@ public class TemplateService {
             errorMsg = "Unable parse the request object";
             emailTemplateModel = (EmailTemplateModel) commonUtil.jsonStringToObjectElseNull(requestBody, EmailTemplateModel.class);
             errorMsg = "Unable save the email template";
+            emailTemplateModel.setStatus(AppConstant.STATUS_ACTIVE);
             emailTemplateModel = emailTemplateRepository.saveAndFlush(emailTemplateModel);
             errorMsg = "";
         } catch (Exception e) {
@@ -71,6 +70,7 @@ public class TemplateService {
 
     public ResponseEntity updateEmailTemplate(String id, String requestBody) {
         String errorMsg = "";
+        log.info("Check TemplateService PUT");
         try {
             Optional<EmailTemplateModel> emailTemplateModel = emailTemplateRepository.findById(Long.valueOf(id));
             if (!emailTemplateModel.isPresent())
@@ -96,18 +96,25 @@ public class TemplateService {
     public ResponseEntity deleteEmailTemplate(String id) {
         String errorMsg = "";
         try {
-            Optional<EmailTemplateModel> emailTemplateModel = emailTemplateRepository.findById(Long.valueOf(id));
-            if (!emailTemplateModel.isPresent())
+            EmailTemplateModel emailTemplateModel = emailTemplateRepository.findByIdAndStatusNot(Long.valueOf(id), AppConstant.STATUS_DELETED);
+            if (emailTemplateModel == null)
                 throw new Exception("Email template not found!.");
 
-            EmailTemplateModel existTemplate = emailTemplateModel.get();
+            EmailTemplateModel existTemplate = emailTemplateModel;
             existTemplate.setStatus(AppConstant.STATUS_DELETED);
             emailTemplateRepository.saveAndFlush(existTemplate);
-            return ResponseEntity.status(200).body("Success deleted");
+
         } catch (Exception e) {
             log.error("Error: {}", e);
+            errorMsg = e.getMessage();
         }
-        return ResponseEntity.status(500).body(errorMsg);
+        String finalErrorMsg = errorMsg;
+        return ResponseEntity.status(finalErrorMsg.isEmpty() ? 200 : 500)
+                .body(new LinkedHashMap() {{
+                    put("status", (finalErrorMsg.isEmpty() ? "Success" : "Failed"));
+                    put("uuid", UUID.randomUUID());
+                    put("message", finalErrorMsg);
+                }});
     }
 
     private String emailTemplate(String emailTemplate, Map<String, String> paramMap) {

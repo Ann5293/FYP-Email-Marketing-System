@@ -1,0 +1,112 @@
+<aside id="sidebar" class="sidebar">
+    <ul class="sidebar-nav" id="sidebar-nav">
+        <li class="nav-item">
+            <a class="nav-link"
+               href="index.html"
+               th:classappend="${activeLink == 'dashboard' ? 'active' : 'collapsed'}"
+               th:href="@{/dashboard}">
+                <i class="bi bi-grid"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
+        <!-- End Dashboard Nav -->
+
+        <li class="nav-item">
+            <a
+                    class="nav-link"
+                    data-bs-target="#Campaigns"
+                    data-bs-toggle="collapse"
+                    href="#"
+                    th:classappend="${#strings.containsIgnoreCase(activeLink, 'campaign') ? 'active' : 'collapsed'}"
+            >
+                <i class="bi bi-envelope"></i><span>Campaigns</span
+            ><i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul
+                    id="Campaigns"
+                    class="nav-content"
+                    th:classappend="${#strings.containsIgnoreCase(activeLink, 'campaign') ? 'active' : 'collapse'}"
+                    data-bs-parent="#sidebar-nav"
+            >
+                <li>
+                    <a href="newemail.html"
+                       th:href="@{/campaign}"
+                       th:classappend="${activeLink == 'campaign-search' ? 'active' : 'collapsed'}"
+                    >
+                        <i class="bi bi-circle"></i>
+                        <span>Search Campaign</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="sendbulkemail.html"
+                       th:href="@{/campaign/create}"
+                       th:classappend="${activeLink == 'campaign-create' ? 'active' : 'collapsed'}"
+                    >
+                        <i class="bi bi-circle"></i>
+                        <span>Create New Campaign</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <!-- End Campaigns Nav -->
+
+        <li class="nav-item">
+            <a
+                    class="nav-link"
+                    data-bs-target="#EmailTemplates"
+                    data-bs-toggle="collapse"
+                    href="#"
+                    th:classappend="${#strings.containsIgnoreCase(activeLink, 'template') ? 'active' : 'collapsed'}"
+            >
+                <i class="bi bi-files-alt"></i><span>Email Templates</span
+            ><i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul
+                    id="EmailTemplates"
+                    class="nav-content"
+                    data-bs-parent="#sidebar-nav"
+                    th:classappend="${#strings.containsIgnoreCase(activeLink, 'template') ? 'active' : 'collapse'}"
+            >
+                <li>
+                    <a href="emailTemplateList.html"
+                       th:href="@{/template}"
+                       th:classappend="${activeLink == 'template-search' ? 'active' : 'collapsed'}"
+                    >
+                        <i class="bi bi-circle"></i>
+                        <span>Search Template</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="emailTemplateCreate.html"
+                       th:href="@{/template/create}"
+                       th:classappend="${activeLink == 'template-create' ? 'active' : 'collapsed'}"
+                    >
+                        <i class="bi bi-circle"></i>
+                        <span>Create New Template</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <!-- End Email Templates Nav -->
+
+        <li class="nav-item">
+            <a class="nav-link" href="contact.html"
+               th:href="@{/contact}"
+               th:classappend="${activeLink == 'customer' ? 'active' : 'collapsed'}"
+            >
+                <i class="fa-regular fa-address-book"></i>
+                <span>Customer Group</span>
+            </a>
+        </li>
+        <!-- End Contact Page Nav -->
+        <li class="nav-item">
+            <a class="nav-link" href="index.html"
+               th:classappend="${activeLink == 'insight' ? 'active' : 'collapsed'}"
+               th:href="@{/insight}">
+                <i class="bi bi-grid"></i>
+                <span>Insight</span>
+            </a>
+        </li>
+        <!-- End Insight Page Nav -->
+    </ul>
+</aside>

@@ -2,6 +2,8 @@ package com.ms.email.marketing.model.response;
 
 import lombok.*;
 
+import java.util.Date;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -16,4 +18,5 @@ public class CampaignResponse {
     private String customerGroupName;
     private String emailTemplateName;
     private String createdDate;
+
 }

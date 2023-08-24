@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <div th:replace="fragments/_head :: head(pageTitle='Email Campaign')"></div>
+  <body>
+    <!-- ======= Header ======= -->
+    <div th:replace="fragments/_header"></div>
+    <!-- End Header -->
+
+    <!-- ======= Sidebar ======= -->
+    <div th:replace="fragments/_sidebar :: aside(activeLink='campaign-search')"></div>
+    <!-- End Sidebar-->
+
+    <!--Enter content Here-->
+
+    <main id="main" class="main">
+      <div class="pagetitle">
+        <h1>Search Campaign</h1>
+        <nav>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html" th:href="@{/dashboard}">Home</a></li>
+            <li class="breadcrumb-item">Campaigns</li>
+            <li class="breadcrumb-item active">Search Campaign</li>
+          </ol>
+        </nav>
+      </div>
+      <!-- End Page Title -->
+      <section th:if="${errorMsg != null}">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <strong>Error! </strong> <span th:text="${errorMsg}">Error Message Description.</span>
+        </div>
+      </section>
+      <section th:if="${successMsg != null}">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <strong>Success! </strong> <span th:text="${successMsg}">You should check in on some of those fields below.</span>
+        </div>
+      </section>
+      <section class="section">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">List of Campaigns</h5>
+            <div class="container" style="margin-top: -10px">
+              <div class="overflow-auto">
+                <form id="searchForm">
+                  <div class="row align-items-center" style="padding-bottom: 10px">
+                    <div class="col-md-6">
+                      Search:
+                      <input
+                              type="text"
+                              class="form-control"
+                              id="searchInput"
+                              placeholder="ID, Campaign Name, Customer Group Name, Template Name, Created Date"
+                              onkeyup="filterData()"
+                      />
+                    </div>
+                    <div class="col-md-6">
+                      <label for="typeFilter">Email Type:</label>
+                      <select
+                              id="typeFilter"
+                              class="form-select"
+                              onchange="filterData()"
+                      >
+                        <option value="all">All</option>
+                        <option value="plaintext">Plain text</option>
+                        <option value="html">Html</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="overflow-auto mt-3">
+
+                    <table class="table table-responsive table-bordered">
+                      <thead>
+                        <tr class="text-center">
+                          <th>ID</th>
+                          <th>Campaign Name</th>
+                          <th>Customer Group Name</th>
+                          <th>Email Template</th>
+                          <th>Type</th>
+                          <th>Created Date</th>
+                          <th>Status</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody id="responseTable">
+                      <tr th:each="campaign : ${campaignList}">
+                        <td th:text="${campaign.id}" data-id="${campaign.id}"></td>
+                        <td
+                                th:text="${campaign.name}"
+                                data-name="${campaign.name}"
+                        ></td>
+                        <td
+                                th:text="${campaign.customerGroupName}"
+                                data-customergroupName="${campaign.customerGroupName}"
+                        ></td>
+                        <td
+                                th:text="${campaign.emailTemplateName}"
+                                data-emailTemplateName="${campaign.emailTemplateName}"
+                        ></td>
+                        <td>
+                          <span class="badge bg-info"
+                                th:if="${campaign.type != null && #strings.toUpperCase(campaign.type) == 'HTML' }"
+                                th:text="${#strings.toUpperCase(campaign.type)}"
+                                data-type="${campaign.type}">EMAIL TYPE: HTML
+                          </span>
+                          <span class="badge bg-secondary"
+                                th:if="${campaign.type != null && #strings.toUpperCase(campaign.type) != 'HTML' }"
+                                th:text="${#strings.toUpperCase(campaign.type)}" data-type="${campaign.type}">EMAIL TYPE: NOT HTML
+                          </span>
+                          <span class="badge bg-warning" th:unless="${campaign.type != null}"
+                                th:text="${campaign.type}" data-type="${campaign.type}">EMAIL TYPE
+                          </span>
+                        </td>
+                        <td
+                                th:text="${campaign.createdDate}"
+                                data-createdDate="${campaign.createdDate}"
+                        >
+                        </td>
+                        <td
+                                th:text="${campaign.status}"
+                                data-status="${campaign.status}"
+                        >
+                        </td>
+                        <td>
+                          <a th:href="@{/v1/download/campaign/{campaignId}(campaignId=${campaign.id})}" class="btn btn-success">Download</a>
+<!--                          <input-->
+<!--                                  type="button"-->
+<!--                                  class="btn btn-success"-->
+<!--                                  value="Download"-->
+<!--                                  th:onclick=""-->
+<!--                          />-->
+                        </td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!--Content Close Here-->
+
+    <!-- ======= Footer ======= -->
+    <div th:replace="fragments/_footer"></div>
+    <!-- End Footer -->
+
+    <a
+      href="#"
+      class="back-to-top d-flex align-items-center justify-content-center"
+      ><i class="bi bi-arrow-up-short"></i
+    ></a>
+
+    <!-- Vendor JS Files -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+      crossorigin="anonymous"
+    ></script>
+
+    <script>
+  function filterData() {
+    var searchText = document.getElementById("searchInput").value.toLowerCase();
+    var typeFilter = document.getElementById("typeFilter").value.toLowerCase();
+
+    var rows = document.querySelectorAll("#responseTable tr");
+
+    for (var row of rows) {
+      var id = row.querySelector("[data-id]").textContent.toLowerCase();
+      var name = row.querySelector("[data-name]").textContent.toLowerCase();
+      var custGroup = row.querySelector("[data-customergroupName]").textContent.toLowerCase();
+      var emailTemplate = row.querySelector("[data-emailTemplateName]").textContent.toLowerCase();
+      var date = row.querySelector("[data-createdDate]").textContent.toLowerCase();
+      var type = row.querySelector("[data-type]").textContent.toLowerCase();
+
+      var showRow = true;
+
+      // Check if the row matches the search text
+      if (searchText !== "" &&
+          !(id.includes(searchText) ||
+          name.includes(searchText) ||
+          custGroup.includes(searchText) ||
+          emailTemplate.includes(searchText) ||
+          date.includes(searchText))) {
+        showRow = false;
+      }
+
+      // Check if the row matches the type filter
+      if (typeFilter !== "all" && type !== typeFilter) {
+        showRow = false;
+      }
+
+      if (showRow) {
+        row.style.display = "table-row";
+      } else {
+        row.style.display = "none";
+      }
+    }
+  }
+</script>
+
+    <!-- Template Main JS File -->
+    <script src="js/main.js"></script>
+  </body>
+</html>

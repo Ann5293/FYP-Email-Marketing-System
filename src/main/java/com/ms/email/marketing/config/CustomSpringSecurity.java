@@ -31,8 +31,12 @@ public class CustomSpringSecurity {
                 .authorizeHttpRequests(authorize -> authorize
                         .antMatchers("/register/**", "/index").permitAll()
                         .antMatchers("/dashboard").hasRole("ADMIN")
-                        .antMatchers("/template").permitAll()
-                        .antMatchers("/template/**").permitAll()
+                        .antMatchers("/profile").hasRole("ADMIN")
+                        .antMatchers("/contact/**").hasRole("ADMIN")
+                        .antMatchers("/campaign/**").hasRole("ADMIN")
+                        .antMatchers("/template").hasRole("ADMIN")
+                        .antMatchers("/template/**").hasRole("ADMIN")
+                        .antMatchers("/insight/**").hasRole("ADMIN")
                 )
                 .formLogin(form -> form
                         .loginPage("/login")

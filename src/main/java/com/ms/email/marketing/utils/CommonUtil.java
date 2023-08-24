@@ -42,9 +42,6 @@ public class CommonUtil {
         }
         return data == null ? null : (String) data;
     }
-//    public Object jsonToObject (String jsonData, Class obj) throws JsonProcessingException {
-//        return new ObjectMapper().readValue(jsonData, obj.getClass());
-//    }
 
     public <T> Object jsonStringToObjectElseNull(String jsonData, Class<T> obj){
         try {

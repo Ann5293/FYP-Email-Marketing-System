@@ -7,6 +7,7 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -32,4 +33,10 @@ public class CampaignModel {
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @CreationTimestamp
     private LocalDateTime createdDate;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @UpdateTimestamp
+    private LocalDateTime updatedDate;
 }

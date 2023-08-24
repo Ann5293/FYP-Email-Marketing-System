@@ -1,7 +1,8 @@
 package com.ms.email.marketing.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.ms.email.marketing.constant.AppConstant;
+import com.ms.email.marketing.model.EmailLogModel;
+import com.ms.email.marketing.repository.EmailLogRepository;
 import com.ms.email.marketing.service.CustomerService;
 import com.ms.email.marketing.service.EmailService;
 import com.ms.email.marketing.service.FileService;
@@ -15,36 +16,42 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.mail.MessagingException;
-import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = AppConstant.API_VERSION_V1)
 @CrossOrigin(origins = "http://127.0.0.1:5500")
 public class EmailController {
 
-    private final Logger LOG = LoggerFactory.getLogger(EmailController.class);
-    @Autowired private EmailService emailService;
-    @Autowired private FileService fileService;
-    @Autowired private CustomerService customerService;
-
-    @PostMapping("/email")
-    public ResponseEntity<?> emailSetup(@RequestBody String emailSetupBody) throws JsonProcessingException {
-        return emailService.sendEmail(emailSetupBody);
-    }
-
-    @PostMapping("/bulkemail")
-    public ResponseEntity bulkEmailSetup(@RequestBody String requestBody) throws MessagingException {
-        return emailService.sendBulkEmail(requestBody);
-    }
+    private final Logger log = LoggerFactory.getLogger(EmailController.class);
+    @Autowired
+    private EmailService emailService;
+    @Autowired
+    private FileService fileService;
+    @Autowired
+    private CustomerService customerService;
+    @Autowired
+    private EmailLogRepository emailLogRepository;
 
     @GetMapping("/tracking-pixel.png")
-    public ResponseEntity<?> emailTrack(@RequestParam(value = "id", required = false) String emailID){
+    public ResponseEntity<?> emailTrack(@RequestParam(value = "id", required = false) String emailID) {
         //<img src="https://your-app-domain.com/tracking-pixel.png?emailId=12345" alt="tracking-pixel">
-        LOG.info("This Email ID just accessed: {}", emailID);
+        log.info("This Email ID just accessed: {}", emailID);
         // Log the email open event or perform desired actions
-        System.out.println("Email opened for ID: " + emailID);
-
+        try {
+            if (emailID != null && !emailID.isEmpty()) {
+                Optional<EmailLogModel> emailLogModel = emailLogRepository.findByEmailTrackId(emailID);
+                if (emailLogModel.isPresent()) {
+                    log.info("Found, will update: "+ emailID);
+                    EmailLogModel existEmailLogModel = emailLogModel.get();
+                    existEmailLogModel.setReadDateTime(LocalDateTime.now());
+                    emailLogRepository.saveAndFlush(existEmailLogModel);
+                }
+            }
+        } catch (Exception e) {
+            log.error("Error: " + e);
+        }
         // Return a 1x1 transparent pixel image as the response
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.IMAGE_PNG);
@@ -54,16 +61,10 @@ public class EmailController {
     @PostMapping("/upload")
     public ResponseEntity<?> uploadFile(
             @RequestParam("file") MultipartFile file
-            ,@RequestParam(value = "customerGroupId", required = false) String customerGroupId
-    ) throws IOException {
-
-        LOG.info("upload : "+file.getOriginalFilename());
+            , @RequestParam(value = "customerGroupId", required = false) String customerGroupId
+    ) throws Exception {
+        log.info("upload : " + file.getOriginalFilename());
         return fileService.uploadFile(file, customerGroupId);
-    }
-
-    @GetMapping("/upload")
-    public ResponseEntity<?> getUploadFile() throws IOException {
-        return fileService.getUploadedFiles();
     }
 
 }

@@ -29,18 +29,18 @@ public class TemplateRestController {
         return templateService.createEmailTemplate(requestBody);
     }
 
-    @PutMapping("/emailTemplate")
+    @PutMapping("/emailTemplate/{id}")
     public ResponseEntity updateEmailTemplate(
             @RequestBody(required = false) String requestBody,
-            @RequestParam("id") String id
+            @PathVariable("id") String id
     ) {
         return templateService.updateEmailTemplate(id, requestBody);
     }
 
-    @DeleteMapping("/emailTemplate")
+    @DeleteMapping("/emailTemplate/{id}")
     public ResponseEntity deleteEmailTemplate(
             @RequestBody(required = false) String requestBody,
-            @RequestParam("id") String id
+            @PathVariable("id") String id
     ) {
         return templateService.deleteEmailTemplate(id);
     }

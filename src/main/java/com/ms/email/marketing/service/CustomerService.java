@@ -2,9 +2,9 @@ package com.ms.email.marketing.service;
 
 import com.ms.email.marketing.constant.AppConstant;
 import com.ms.email.marketing.model.CustomerGroupModel;
-import com.ms.email.marketing.model.CustomerListingModel;
+import com.ms.email.marketing.model.CustomerModel;
 import com.ms.email.marketing.repository.CustomerGroupRepository;
-import com.ms.email.marketing.repository.CustomerListingRepository;
+import com.ms.email.marketing.repository.CustomerRepository;
 import com.ms.email.marketing.utils.CommonUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,14 +21,13 @@ public class CustomerService {
     @Autowired
     private CustomerGroupRepository customerGroupRepository;
     @Autowired
-    private CustomerListingRepository customerListingRepository;
+    private CustomerRepository customerRepository;
 
     @Autowired
     private CommonUtil commonUtil;
 
     public List<CustomerGroupModel> getAllCustomerGroup() {
-        //return customerGroupRepository.findAll();
-        return customerGroupRepository.findAllByStatusNot(AppConstant.STATUS_DELETED);
+        return customerGroupRepository.findAllByStatus(AppConstant.STATUS_ACTIVE);
     }
 
     public ResponseEntity createNewCustomerGroup(String requestBody) {
@@ -69,12 +68,20 @@ public class CustomerService {
                             put("uuid", UUID.randomUUID());
                             put("message", "Success updated.");
                         }});
+            } else {
+                throw new Exception("Customer Group Not found");
             }
         } catch (Exception e) {
             log.error("Error: {}", e);
             errorMsg = e.getMessage();
         }
-        return ResponseEntity.status(500).body(errorMsg);
+        String finalErrorMsg = errorMsg;
+        return ResponseEntity.status(500)
+                .body(new LinkedHashMap() {{
+                    put("status", "Failed");
+                    put("uuid", UUID.randomUUID());
+                    put("message", finalErrorMsg);
+                }});
     }
 
     public ResponseEntity deleteCustomerGroup(String customerGroupId) {
@@ -94,16 +101,15 @@ public class CustomerService {
                     .body(new LinkedHashMap() {{
                         put("status", "Failed");
                         put("uuid", UUID.randomUUID());
-                        put("message", "Delete failed");
+                        put("message", "CustomerGroup Id not found!");
                     }});
         }
     }
 
-    public void uploadCsvAndTxtDataToDB(List<Map<String, String>> data, Long fileUploadID, String customerGroupId) {
-        List<CustomerListingModel> customerList = new ArrayList<>();
+    public void uploadCsvAndTxtDataToDB(List<Map<String, String>> data, String customerGroupId) {
+        List<CustomerModel> customerList = new ArrayList<>();
         for (Map<String, String> rowData : data) {
-            CustomerListingModel cust = new CustomerListingModel();
-            cust.setFileUploadId(fileUploadID);
+            CustomerModel cust = new CustomerModel();
             Map<String, String> fields = new HashMap<>();
             for (Map.Entry<String, String> entry : rowData.entrySet()) {
                 String header = entry.getKey();
@@ -120,13 +126,155 @@ public class CustomerService {
                 }
             }
             cust.setFields(fields);
+            cust.setStatus(AppConstant.STATUS_ACTIVE);
             cust.setCustomerGroupId(Long.valueOf(customerGroupId));
             customerList.add(cust);
         }
-        customerListingRepository.saveAll(customerList);
+        for(CustomerModel cust : customerList){
+            CustomerModel existCust = customerRepository.findByEmailAndCustomerGroupIdAndStatus(cust.getEmail(), Long.valueOf(customerGroupId), AppConstant.STATUS_ACTIVE);
+            if(existCust != null) {
+                existCust.setName(cust.getName());
+                for (Map.Entry<String, String> entry : cust.getFields().entrySet()) {
+                    String key = entry.getKey();
+                    String value = entry.getValue();
+                    Map<String, String> existFields = existCust.getFields();
+                    if (existFields.containsKey(key)) {
+                        existFields.put(key, value);
+                    } else {
+                        existFields.put(key, value);
+                    }
+                }
+                customerRepository.save(existCust);
+            }else {
+                customerRepository.save(cust);
+            }
+        }
     }
 
-    public CustomerGroupModel getCustomerGroupById(Long id){
+    public CustomerGroupModel getCustomerGroupById(Long id) {
         return customerGroupRepository.findById(id).orElse(null);
     }
+
+    public ResponseEntity getCustomerListFromCustomerGroup(String groupId) {
+        String errorMsg = "";
+        try {
+            Optional<CustomerGroupModel> customerGroup = customerGroupRepository.findById(Long.valueOf(groupId));
+            if (customerGroup.isPresent()) {
+                List<CustomerModel> customerList = customerRepository.findAllByCustomerGroupIdAndStatusNot(Long.valueOf(groupId), AppConstant.STATUS_DELETED);
+                return ResponseEntity.ok(customerList);
+            } else {
+                throw new Exception("Customer Group Id not found!");
+            }
+        } catch (Exception e) {
+            log.error("Error: " + e);
+            errorMsg = e.getMessage();
+        }
+        return ResponseEntity.status(500)
+                .body(new LinkedHashMap() {{
+                    put("status", "Failed");
+                    put("uuid", UUID.randomUUID());
+                    put("message", "Get failed");
+                }});
+    }
+
+    public ResponseEntity getCustomerFromCustomerGroup(String groupId, String customerId) {
+        String errorMsg = "";
+        try {
+            Optional<CustomerGroupModel> customerGroup = customerGroupRepository.findById(Long.valueOf(groupId));
+            if (!customerGroup.isPresent())
+                throw new Exception("Customer Group Id not found!");
+
+            CustomerModel customer = customerRepository.findByIdAndCustomerGroupIdAndStatusNot(Long.valueOf(customerId), Long.valueOf(groupId), AppConstant.STATUS_DELETED);
+            if (customer == null)
+                throw new Exception("Customer Group Id not found!");
+            return ResponseEntity.status(200).body(customer);
+
+        } catch (Exception e) {
+            log.error("Error: " + e);
+            errorMsg = e.getMessage();
+        }
+        return ResponseEntity.status(500)
+                .body(new LinkedHashMap() {{
+                    put("status", "Failed");
+                    put("uuid", UUID.randomUUID());
+                    put("message", "Get failed");
+                }});
+    }
+
+    public ResponseEntity createCustomerFromCustomerGroup(String groupId, String requestBody) {
+        try {
+            CustomerGroupModel customerGroup = customerGroupRepository.findByIdAndStatusNot(Long.valueOf(groupId), AppConstant.STATUS_DELETED);
+            if (customerGroup == null)
+                throw new Exception("Customer Group Id not found!");
+            CustomerModel newCustomer = (CustomerModel) commonUtil.jsonStringToObjectElseNull(requestBody, CustomerModel.class);
+            newCustomer.setStatus(AppConstant.STATUS_ACTIVE);
+            newCustomer.setCustomerGroupId(Long.valueOf(groupId));
+            newCustomer = customerRepository.saveAndFlush(newCustomer);
+            return ResponseEntity.status(200).body(newCustomer);
+        } catch (Exception e) {
+            log.error("Error: " + e);
+        }
+        return ResponseEntity.status(500)
+                .body(new LinkedHashMap() {{
+                    put("status", "Failed");
+                    put("uuid", UUID.randomUUID());
+                    put("message", "Get failed");
+                }});
+    }
+
+    public ResponseEntity updateCustomerFromCustomerGroup(String groupId, String customerId, String requestBody) {
+        String errorMsg = "";
+        try {
+            CustomerGroupModel customerGroup = customerGroupRepository.findByIdAndStatusNot(Long.valueOf(groupId), AppConstant.STATUS_DELETED);
+            if (customerGroup == null)
+                throw new Exception("Customer Group Id not found!");
+            CustomerModel existCustomer = customerRepository.findByIdAndCustomerGroupIdAndStatusNot(Long.valueOf(customerId), Long.valueOf(groupId), AppConstant.STATUS_DELETED);
+            if (existCustomer == null)
+                throw new Exception("Customer not found!");
+            CustomerModel updateCustomer = (CustomerModel) commonUtil.jsonStringToObjectElseNull(requestBody, CustomerModel.class);
+            if (updateCustomer == null)
+                throw new Exception("Invalid requestBody");
+            existCustomer.setName(updateCustomer.getName());
+            existCustomer.setEmail(updateCustomer.getEmail());
+            existCustomer.setFields(updateCustomer.getFields());
+            existCustomer = customerRepository.saveAndFlush(existCustomer);
+            return ResponseEntity.status(200).body(existCustomer);
+        } catch (Exception e) {
+            log.error("Error: " + e);
+            errorMsg = e.getMessage();
+        }
+        String finalErrorMsg = errorMsg;
+        return ResponseEntity.status(errorMsg.isEmpty() ? 200 : 500)
+                .body(new LinkedHashMap() {{
+                    put("status", finalErrorMsg.isEmpty() ? "Success" : "Failed");
+                    put("uuid", UUID.randomUUID());
+                    put("message", finalErrorMsg);
+                }});
+    }
+
+    public ResponseEntity deleteCustomerFromCustomerGroup(String groupId, String customerId) {
+        String errorMsg = "";
+        try {
+            CustomerGroupModel customerGroup = customerGroupRepository.findByIdAndStatusNot(Long.valueOf(groupId), AppConstant.STATUS_DELETED);
+            if (customerGroup == null)
+                throw new Exception("Customer Group Id not found!");
+            CustomerModel existCustomer = customerRepository.findByIdAndCustomerGroupIdAndStatusNot(Long.valueOf(customerId), Long.valueOf(groupId), AppConstant.STATUS_DELETED);
+            if (existCustomer == null)
+                throw new Exception("Customer not found!");
+            existCustomer.setStatus(AppConstant.STATUS_DELETED);
+            existCustomer = customerRepository.saveAndFlush(existCustomer);
+            return ResponseEntity.status(200).body(existCustomer);
+        } catch (Exception e) {
+            log.error("Error: " + e);
+            errorMsg = e.getMessage();
+        }
+        String finalErrorMsg = errorMsg;
+        return ResponseEntity.status(errorMsg.isEmpty() ? 200 : 500)
+                .body(new LinkedHashMap() {{
+                    put("status", finalErrorMsg.isEmpty() ? "Success" : "Failed");
+                    put("uuid", UUID.randomUUID());
+                    put("message", finalErrorMsg);
+                }});
+    }
+
 }
