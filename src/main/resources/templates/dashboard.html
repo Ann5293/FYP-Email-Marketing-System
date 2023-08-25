@@ -29,7 +29,7 @@
   <section class="section dashboard">
         <div class="row">
 
-          <!-- Revenue Card -->
+          <!-- Templates -->
           <div class="col-xxl-4 col-md-6">
             <div class="card info-card revenue-card">
               <div class="card-body">
@@ -48,9 +48,9 @@
               </div>
             </div>
           </div>
-          <!-- End Revenue Card -->
+          <!-- End Templates -->
 
-          <!-- Sales Card -->
+          <!-- Customer Groups -->
           <div class="col-xxl-4 col-md-6">
             <div class="card info-card sales-card">
               <div class="card-body">
@@ -69,9 +69,9 @@
               </div>
             </div>
           </div>
-          <!-- End Sales Card -->
+          <!-- End Customer Groups -->
 
-          <!-- Customers Card -->
+          <!-- Customers -->
           <div class="col-xxl-4 col-xl-12">
             <div class="card info-card customers-card">
               <div class="card-body">
@@ -90,28 +90,11 @@
               </div>
             </div>
           </div>
-          <!-- End Customers Card -->
+          <!-- End Customers -->
 
-          <!-- Recent Sales -->
+          <!-- Recent Campaigns -->
           <div class="col-12">
             <div class="card recent-sales overflow-auto">
-              <div class="filter">
-                <a class="icon" href="#" data-bs-toggle="dropdown"
-                ><i class="bi bi-three-dots"></i
-                ></a>
-                <ul
-                        class="dropdown-menu dropdown-menu-end dropdown-menu-arrow"
-                >
-                  <li class="dropdown-header text-start">
-                    <h6>Filter</h6>
-                  </li>
-
-                  <li><a class="dropdown-item" href="#">Today</a></li>
-                  <li><a class="dropdown-item" href="#">This Month</a></li>
-                  <li><a class="dropdown-item" href="#">This Year</a></li>
-                </ul>
-              </div>
-
               <div class="card-body">
                 <h5 class="card-title">
                   Email Campaigns <span>| TOP 10</span>
@@ -130,7 +113,7 @@
                   </thead>
                   <tbody>
                   <tr th:each="camp : ${getLatestTop10NonDeletedCampaigns}">
-                    <td scope="row" data-id="${camp.id}"><a href="#" th:text="${camp.id}">#2457</a></td>
+                    <td scope="row" data-id="${camp.id}"><a href="#" th:text="${camp.id}" th:href="@{/campaign/{campaignId}(campaignId=${camp.id})}">#2457</a></td>
                     <td th:text="${camp.name}" data-id="${camp.name}"></td>
                     <td>
                       <span class="badge bg-info"
@@ -145,8 +128,8 @@
                             th:text="${camp.type}">EMAIL TYPE
                       </span>
                     </td>
-                    <td th:text="${camp.emailTemplateName}" data-id="${camp.emailTemplateName}"></td>
-                    <td th:text="${camp.customerGroupName}" data-id="${camp.customerGroupName}"></td>
+                    <td th:text="${camp.emailTemplateName}" data-id="${camp.emailTemplateName}" th:href="@{/template}"></td>
+                    <td th:text="${camp.customerGroupName}" data-id="${camp.customerGroupName}" th:href="@{/contact}"></td>
                     <td>
 <!--                      <span class="badge bg-warning">Pending</span>-->
                       <span class="badge bg-success" th:text="${camp.status}">Approved</span>
@@ -157,7 +140,7 @@
               </div>
             </div>
           </div>
-          <!-- End Recent Sales -->
+          <!-- End Recent Campaigns -->
         </div>
   </section>
 </main>

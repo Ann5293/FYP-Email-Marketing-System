@@ -7,6 +7,14 @@ public interface CampaignResultResponse {
 
     String getCampaignName();
 
+    Long getCustomerGroupId();
+
+    String getCustomerGroupName();
+
+    Long getTemplateId();
+
+    String getTemplateName();
+
     String getStatus();
 
     String getEmail();
@@ -16,5 +24,7 @@ public interface CampaignResultResponse {
     String getErrorMsg();
 
     LocalDateTime getSentDateTime();
+
+    LocalDateTime getReadDateTime();
 
 }

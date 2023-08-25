@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-  <div th:replace="fragments/_head :: head(pageTitle='Email Campaign')"></div>
+  <div th:replace="fragments/_head :: head(pageTitle='Campaign')"></div>
   <body>
     <!-- ======= Header ======= -->
     <div th:replace="fragments/_header"></div>
@@ -116,13 +116,14 @@
                                 data-createdDate="${campaign.createdDate}"
                         >
                         </td>
-                        <td
-                                th:text="${campaign.status}"
-                                data-status="${campaign.status}"
-                        >
-                        </td>
                         <td>
-                          <a th:href="@{/v1/download/campaign/{campaignId}(campaignId=${campaign.id})}" class="btn btn-success">Download</a>
+                          <span class="badge bg-success"
+                                th:text="${campaign.status}"
+                                data-status="${campaign.status}"></span>
+                        </td>
+                        <td class="text-center gap-2">
+                          <a th:href="@{/campaign/{campaignId}(campaignId=${campaign.id})}" class="btn btn-info mt-2">View</a>
+                          <a th:href="@{/v1/download/campaign/{campaignId}(campaignId=${campaign.id})}" class="btn btn-success mt-2">Download</a>
 <!--                          <input-->
 <!--                                  type="button"-->
 <!--                                  class="btn btn-success"-->

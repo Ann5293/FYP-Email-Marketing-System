@@ -23,22 +23,24 @@ public class InsightController {
     @GetMapping("/insight")
     public String insightPage(
             Model model,
-            @RequestParam(value = "searchTag", required = false) String searchTag,
+            @RequestParam(value = "searchCampaign", required = false) String searchCampaign,
             @RequestParam(value = "searchCount", required = false) Long searchCount
     ) {
-        List<InsightResponse> insightResponseList = new ArrayList<>();
-        if (model.getAttribute("insightList") == null) {
-            insightResponseList = emailLogRepo.getInsightResponse();
-        }
-        if (searchCount != null) {
-            insightResponseList = emailLogRepo.getInsightResponse(searchCount);
-        }
-        model.addAttribute("insightList", insightResponseList);
-
-        log.info("searchTag: " + searchTag);
+        log.info("searchCampaign: " + searchCampaign);
         log.info("searchCount: " + searchCount);
 
-        model.addAttribute("searchTag", searchTag == null ? "" : searchTag);
+        List<InsightResponse> insightResponseList = new ArrayList<>();
+        if (searchCount == null)
+            searchCount = Long.valueOf(1);
+        if( searchCampaign == null){
+            searchCampaign = "";
+        }
+
+        insightResponseList = emailLogRepo.getInsightResponse(searchCount, searchCampaign);
+
+        model.addAttribute("insightList", insightResponseList);
+
+        model.addAttribute("searchCampaign", searchCampaign == null ? "" : searchCampaign);
         model.addAttribute("searchCount", searchCount); // No need to check for null, Long defaults to null if not provided
 
         return "insight";

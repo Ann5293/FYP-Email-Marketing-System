@@ -42,7 +42,7 @@ public class EmailService {
     @Autowired private CampaignRepository campaignRepo;
     @Autowired private CustomerService customerService;
 
-    public void startBlastCampaign(Long templateId, Long customerGroupId, String campaignName) {
+    public CampaignModel startBlastCampaign(Long templateId, Long customerGroupId, String campaignName) {
         log.info("startBlastCampaign - customerGroupId: "+ customerGroupId);
         Optional<EmailTemplateModel> template = emailTemplateRepo.findById(templateId);
         Optional<CustomerGroupModel> customerGroup = customerGroupRepo.findById(customerGroupId);
@@ -66,7 +66,7 @@ public class EmailService {
                 emailRequest.setType(templateModel.getType());
                 emailRequest.setMessage(templateModel.getBody());
                 emailRequest.setTrackingUuid(emailTrackingID);
-                //Logging prupose
+                //Logging purpose
                 EmailLogModel emailLoggingModel = new EmailLogModel();
                 emailLoggingModel.setEmailTo(emailRequest.getTo());
                 emailLoggingModel.setEmailSubject(emailRequest.getSubject());
@@ -107,7 +107,8 @@ public class EmailService {
             }
         }
         campaignModel.setStatus("COMPLETED");
-        campaignRepo.saveAndFlush(campaignModel);
+        campaignModel = campaignRepo.saveAndFlush(campaignModel);
+        return campaignModel;
     }
 
     private void sendPlainEmail(EmailRequest emailRequest) {

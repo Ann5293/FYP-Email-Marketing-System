@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CampaignService {
@@ -74,5 +75,9 @@ public class CampaignService {
 
     public List<CampaignResultResponse> getCampaignResultResponse(Long id){
         return campaignRepository.getCampaignResult(id);
+    }
+
+    public Optional<CampaignModel> getActiveCampaignById(Long campaignId){
+        return campaignRepository.findById(campaignId);
     }
 }

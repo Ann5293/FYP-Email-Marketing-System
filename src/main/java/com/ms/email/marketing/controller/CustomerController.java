@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Optional;
@@ -35,6 +36,7 @@ public class CustomerController {
     public String addCustomerIntoGroup(
             Model model
             , @PathVariable("id") String customerGroupId
+            , RedirectAttributes redirectAttributes
     ) {
         Optional<CustomerGroupModel> customerGroupModel = customerGroupRepo.findById(Long.valueOf(customerGroupId));
         if (customerGroupModel.isPresent()) {
@@ -43,6 +45,7 @@ public class CustomerController {
             model.addAttribute("customerList", customerModelList);
             return "customer";
         }
-        return "redirect:/customerGroupIndex";
+        redirectAttributes.addFlashAttribute(AppConstant.FLASH_ATTR_ERRORMSG, "The customer group ID not found: "+ customerGroupId);
+        return "redirect:/contact";
     }
 }

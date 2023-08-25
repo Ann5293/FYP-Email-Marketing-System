@@ -55,13 +55,17 @@ limit 5;
 
     @Query(nativeQuery = true, value =
             "SELECT " +
-                    "ecamp.id, ecamp.name as 'campaignName', ecamp.status , ecust.email, elog.status AS 'emailStatus' , elog.error_msg as 'errorMsg', elog.trigger_date_time as sentDateTime" +
+                    "ecamp.id, ecamp.name as 'campaignName'" +
+                    ", ecb.id as 'customerGroupId', ecb.name as 'customerGroupName'" +
+                    ", emt.id as 'templateId', emt.name as 'templateName'" +
+                    ", ecamp.status , ecust.email, elog.status AS 'emailStatus' , elog.error_msg as 'errorMsg', elog.trigger_date_time as sentDateTime" +
+                    " , elog.read_date_time as 'readDateTime'" +
                     "        from ems_email_campaign ecamp" +
                     "            left join ems_email_template emt on emt.id = ecamp.email_template_id" +
                     "            left join ems_customer_base ecb on ecb.id = ecamp.customer_group_id " +
                     "            left join ems_customer ecust on ecust.customer_group_id  = ecb.id" +
                     "            left join ems_email_log elog on elog.campaign_id = ecamp.id and elog.email_to = ecust.email " +
-                    "        where ecamp.id = ?1 and ecamp.status != 'DELETED' and emt.status != 'DELETED' and ecb.status != 'DELETED'" +
+                    "        where ecamp.id = ?1 and ecamp.status != 'DELETED' and emt.status != 'DELETED' and ecb.status != 'DELETED' and ecust.status != 'DELETED'" +
                     ";"
     )
     List<CampaignResultResponse> getCampaignResult(Long id);

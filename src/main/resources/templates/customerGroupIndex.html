@@ -23,7 +23,16 @@
     </nav>
   </div>
   <!-- End Page Title -->
-
+  <section th:if="${errorMsg != null}">
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <strong>Error! </strong> <span th:text="${errorMsg}">Error Message Description.</span>
+    </div>
+  </section>
+  <section th:if="${successMsg != null}">
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <strong>Success! </strong> <span th:text="${successMsg}">You should check in on some of those fields below.</span>
+    </div>
+  </section>
   <section class="section">
     <div class="my-3 p-3 bg-body rounded shadow-sm">
       <h6 class="border-bottom pb-2 mb-0 d-flex justify-content-between">

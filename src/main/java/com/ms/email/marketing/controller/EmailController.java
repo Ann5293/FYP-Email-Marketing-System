@@ -42,8 +42,9 @@ public class EmailController {
         try {
             if (emailID != null && !emailID.isEmpty()) {
                 Optional<EmailLogModel> emailLogModel = emailLogRepository.findByEmailTrackId(emailID);
-                if (emailLogModel.isPresent()) {
-                    log.info("Found, will update: "+ emailID);
+                // Only update the 1st readDateTime when the email opened.
+                if (emailLogModel.isPresent() && emailLogModel.get().getReadDateTime() == null) {
+                    log.info("Found, update: "+ emailID);
                     EmailLogModel existEmailLogModel = emailLogModel.get();
                     existEmailLogModel.setReadDateTime(LocalDateTime.now());
                     emailLogRepository.saveAndFlush(existEmailLogModel);
@@ -53,9 +54,15 @@ public class EmailController {
             log.error("Error: " + e);
         }
         // Return a 1x1 transparent pixel image as the response
+
+        // Replace with the actual base64 string for the 1x1 transparent pixel image
+        String base64Image = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mJ0CgAAADAAAgEKAIoAAAAASUVORK5CYII=";
+        // Decode the base64 string to byte array
+        byte[] imageBytes = javax.xml.bind.DatatypeConverter.parseBase64Binary(base64Image);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.IMAGE_PNG);
-        return new ResponseEntity<>(new byte[0], headers, HttpStatus.OK);
+        //return new ResponseEntity<>(new byte[0], headers, HttpStatus.OK);
+        return new ResponseEntity<>(imageBytes, headers, HttpStatus.OK);
     }
 
     @PostMapping("/upload")

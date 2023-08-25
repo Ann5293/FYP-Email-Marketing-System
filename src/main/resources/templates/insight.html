@@ -37,11 +37,11 @@
                                           <form method="get" th:action="@{/insight}">
                                                 <div class="row align-items-center">
                                                       <div class="col-md-4">
-                                                            <label for="searchTag">Campaign Tag:</label>
-                                                            <input type="text" class="form-control" id="searchTag" th:name="searchTag" th:value="${searchTag}">
+                                                            <label for="searchCampaign">Campaign Search:</label>
+                                                            <input type="text" class="form-control" id="searchCampaign" th:name="searchCampaign" th:value="${searchCampaign}">
                                                       </div>
                                                       <div class="col-md-4">
-                                                            <label for="searchCount">Minimum Count:</label>
+                                                            <label for="searchCount">Minimum Email Read Count:</label>
                                                             <input type="number" class="form-control" id="searchCount" th:name="searchCount" th:value="${searchCount}">
                                                       </div>
                                                 </div>
@@ -60,15 +60,15 @@
                                                             <thead>
                                                                   <tr class="text-center">
                                                                         <th>Email</th>
+                                                                        <th>Campaigns</th>
                                                                         <th>Count</th>
-                                                                        <th>Action</th>
                                                                   </tr>
                                                             </thead>
                                                             <tbody id="responseTableBody">
                                                                   <tr th:each="insight : ${insightList}">
                                                                         <td th:text="${insight.email}"></td>
+                                                                        <td th:text="${insight.emailCampaigns}"></td>
                                                                         <td th:text="${insight.count}"></td>
-                                                                        <td></td>
                                                                   </tr>
                                                             </tbody>
                                                       </table>

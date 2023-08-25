@@ -1,9 +1,12 @@
 package com.ms.email.marketing.controller;
 
 
+import com.ms.email.marketing.constant.AppConstant;
+import com.ms.email.marketing.model.CampaignModel;
 import com.ms.email.marketing.model.CustomerGroupModel;
 import com.ms.email.marketing.model.EmailTemplateModel;
 import com.ms.email.marketing.model.request.CampaignRequest;
+import com.ms.email.marketing.model.response.CampaignResultResponse;
 import com.ms.email.marketing.service.CampaignService;
 import com.ms.email.marketing.service.CustomerService;
 import com.ms.email.marketing.service.EmailService;
@@ -15,10 +18,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class CampaignController {
@@ -34,8 +39,28 @@ public class CampaignController {
     private TemplateService templateService;
 
     @GetMapping("/campaign")
-    public String showCampaignPage(Model model) {
+    public String showCampaignPage(
+            Model model
+            , RedirectAttributes redirectAttributes
+    ) {
         return campaignService.handleCampaignPage(model);
+    }
+
+    @GetMapping("/campaign/{id}")
+    public String showCampaignResultPage(
+            @PathVariable("id") Long campaignId
+            ,Model model
+            , RedirectAttributes redirectAttributes) {
+        Optional<CampaignModel> isActiveCampaign = campaignService.getActiveCampaignById(campaignId);
+        if(!isActiveCampaign.isPresent() || isActiveCampaign.get().getStatus().equalsIgnoreCase(AppConstant.STATUS_DELETED)){
+            redirectAttributes.addFlashAttribute(AppConstant.FLASH_ATTR_ERRORMSG, "Invalid Campaign Id: "+ campaignId);
+            return "redirect:/campaign";
+        }
+
+        List<CampaignResultResponse> campaignResultResponses =  campaignService.getCampaignResultResponse(campaignId);
+        model.addAttribute("campaignObj", isActiveCampaign.get());
+        model.addAttribute("campaignResultResponses", campaignResultResponses);
+        return "campaignView";
     }
 
     @GetMapping("/campaign/create")
@@ -64,8 +89,9 @@ public class CampaignController {
     ) {
         log.info("campaignRequest: "+ campaignRequest);
         String errorMsg = "";
+        CampaignModel campaignModel = null;
         try{
-            emailService.startBlastCampaign(campaignRequest.getTemplateId(), campaignRequest.getCustomerGroupId(), campaignRequest.getCampaignName());
+            campaignModel = emailService.startBlastCampaign(campaignRequest.getTemplateId(), campaignRequest.getCustomerGroupId(), campaignRequest.getCampaignName());
         }catch (Exception e){
             e.printStackTrace();
             log.error(e.getMessage());
@@ -73,7 +99,7 @@ public class CampaignController {
         }
         if(errorMsg.isEmpty()){
             redirectAttributes.addFlashAttribute("successMsg", "Campaign created.");
-            return "redirect:/campaign";
+            return "redirect:/campaign/"+campaignModel.getId();
         }
         redirectAttributes.addFlashAttribute("errorMsg", errorMsg);
         redirectAttributes.addFlashAttribute("campaignRequest", campaignRequest);

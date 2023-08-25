@@ -8,19 +8,21 @@
     <!-- End Header -->
 
     <!-- ======= Sidebar ======= -->
-    <div th:replace="fragments/_sidebar :: aside(activeLink='campaign-search')"></div>
+    <div th:replace="fragments/_sidebar :: aside(activeLink='campaign-view')"></div>
     <!-- End Sidebar-->
 
     <!--Enter content Here-->
 
     <main id="main" class="main">
       <div class="pagetitle">
-        <h1>Search Template</h1>
+        <h1>Campaign View</h1>
         <nav>
           <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-            <li class="breadcrumb-item">Email Templates</li>
-            <li class="breadcrumb-item active">Search Template</li>
+            <li class="breadcrumb-item"><a href="index.html" th:href="@{/dashboard}">Home</a></li>
+            <li class="breadcrumb-item">Campaigns</li>
+            <li class="breadcrumb-item" th:href="@{/campaign}">Search Campaign</li>
+            <li class="breadcrumb-item active" th:text="${campaignObj.id}"></li>
+
           </ol>
         </nav>
       </div>
@@ -38,7 +40,7 @@
       <section class="section">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">List of Campaigns</h5>
+            <h5 class="card-title" th:text="${campaignObj.name}">Campaign</h5>
             <div class="container" style="margin-top: -10px">
               <div class="overflow-auto">
                 <form id="searchForm">
@@ -49,20 +51,20 @@
                               type="text"
                               class="form-control"
                               id="searchInput"
-                              placeholder="ID, Campaign Name, Customer Group Name, Template Name"
+                              placeholder="Email, Error Message"
                               onkeyup="filterData()"
                       />
                     </div>
                     <div class="col-md-6">
-                      <label for="statusFilter">Email Type:</label>
+                      <label for="statusFilter">Email Status:</label>
                       <select
                               id="statusFilter"
                               class="form-select"
                               onchange="filterData()"
                       >
                         <option value="all">All</option>
-                        <option value="plaintext">Plain text</option>
-                        <option value="html">Html</option>
+                        <option value="success">SUCCESS</option>
+                        <option value="failed">FAILED</option>
                       </select>
                     </div>
                   </div>
@@ -72,61 +74,55 @@
                     <table class="table table-responsive table-bordered">
                       <thead>
                         <tr class="text-center">
-                          <th>ID</th>
-                          <th>Campaign Name</th>
-                          <th>Customer Group Name</th>
-                          <th>Email Template</th>
-                          <th>Type</th>
-                          <th>Created Date</th>
+                          <th>Customer Group</th>
+                          <th>Template</th>
+                          <th>Email</th>
                           <th>Status</th>
-                          <th>Action</th>
+                          <th>Error Message</th>
+                          <th>Sent Datetime</th>
+                          <th>Read Datetime</th>
                         </tr>
                       </thead>
                       <tbody id="responseTable">
-                      <tr th:each="campaign : ${campaignList}">
-                        <td th:text="${campaign.id}" data-id="${campaign.id}"></td>
+                      <tr th:each="campaign : ${campaignResultResponses}">
                         <td
-                                th:text="${campaign.name}"
-                                data-name="${campaign.name}"
+                                th:text="${campaign.templateName}"
+                                data-email="${campaign.templateName}"
                         ></td>
                         <td
                                 th:text="${campaign.customerGroupName}"
-                                data-customergroupName="${campaign.customerGroupName}"
+                                data-email="${campaign.customerGroupName}"
                         ></td>
                         <td
-                                th:text="${campaign.emailTemplateName}"
-                                data-emailTemplateName="${campaign.emailTemplateName}"
+                                th:text="${campaign.email}"
+                                data-email="${campaign.email}"
                         ></td>
                         <td>
-                          <span class="badge bg-info"
-                                th:if="${campaign.type != null && #strings.toUpperCase(campaign.type) == 'HTML' }"
-                                th:text="${#strings.toUpperCase(campaign.type)}"
-                                data-type="${campaign.type}">EMAIL TYPE: HTML
+                          <span class="badge bg-success"
+                                th:if="${campaign.emailStatus != null && #strings.toUpperCase(campaign.emailStatus) == 'SUCCESS' }"
+                                th:text="${#strings.toUpperCase(campaign.emailStatus)}"
+                                data-emailStatus="${campaign.emailStatus}">EMAIL SENT: SUCCESS
                           </span>
-                          <span class="badge bg-secondary"
-                                th:if="${campaign.type != null && #strings.toUpperCase(campaign.type) != 'HTML' }"
-                                th:text="${#strings.toUpperCase(campaign.type)}" data-type="${campaign.type}">EMAIL TYPE: NOT HTML
+                          <span class="badge bg-danger"
+                                th:if="${campaign.emailStatus != null && #strings.toUpperCase(campaign.emailStatus) != 'SUCCESS' }"
+                                th:text="${#strings.toUpperCase(campaign.emailStatus)}" data-emailStatus="${campaign.emailStatus}">EMAIL STATUS: NOT SUCCESS
                           </span>
-                          <span class="badge bg-warning" th:unless="${campaign.type != null}"
-                                th:text="${campaign.type}" data-type="${campaign.type}">EMAIL TYPE
+                          <span class="badge bg-warning" th:unless="${campaign.emailStatus != null}"
+                                th:text="${campaign.emailStatus}" data-emailStatus="${campaign.emailStatus}">EMAIL STATUS
                           </span>
                         </td>
+                        <td>
+                          <span class="text-danger" th:text="${campaign.errorMsg}" data-errorMsg="${campaign.errorMsg}"></span>
+                        </td>
                         <td
-                                th:text="${campaign.createdDate}"
-                                data-status="${campaign.createdDate}"
+                                th:text="${campaign.sentDateTime}"
+                                data-sentDateTime="${campaign.sentDateTime}"
                         >
                         </td>
                         <td
-                                th:text="${campaign.status}"
-                                data-status="${campaign.status}"
+                                th:text="${campaign.readDateTime}"
+                                data-readDateTime="${campaign.readDateTime}"
                         >
-                        </td>
-                        <td class="text-center">
-                          <input
-                                  type="button"
-                                  class="btn btn-success"
-                                  value="Download"
-                          />
                         </td>
                       </tr>
                       </tbody>
@@ -167,26 +163,22 @@
     var rows = document.querySelectorAll("#responseTable tr");
 
     for (var row of rows) {
-      var id = row.querySelector("[data-id]").textContent.toLowerCase();
-      var name = row.querySelector("[data-name]").textContent.toLowerCase();
-      var custGroup = row.querySelector("[data-customergroupName]").textContent.toLowerCase();
-      var emailTemplate = row.querySelector("[data-emailTemplateName]").textContent.toLowerCase();
-      var status = row.querySelector("[data-status]").textContent.toLowerCase();
+      var email = row.querySelector("[data-email]").textContent.toLowerCase();
+      var errorMsg = row.querySelector("[data-errorMsg]").textContent.toLowerCase();
+      var emailStatus = row.querySelector("[data-emailStatus]").textContent.toLowerCase();
 
       var showRow = true;
 
       // Check if the row matches the search text
       if (searchText !== "" &&
-          !(id.includes(searchText) ||
-          name.includes(searchText) ||
-          custGroup.includes(searchText) ||
-          emailTemplate.includes(searchText)
+          !(email.includes(searchText) ||
+          errorMsg.includes(searchText)
           )) {
         showRow = false;
       }
 
       // Check if the row matches the status filter
-      if (statusFilter !== "all" && status !== statusFilter) {
+      if (statusFilter !== "all" && emailStatus !== statusFilter) {
         showRow = false;
       }
 
